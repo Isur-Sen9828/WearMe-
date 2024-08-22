@@ -10,7 +10,6 @@ import Footer from "./components/Footer"
 export default function App() {
   return (
     <main className="bg-primary text-tertiary">
-
       <BrowserRouter>
       <Header/>
       <Routes>

@@ -20,4 +20,4 @@
     ],
   },
 ];
-export default FOOTER_LINKS
+export default FOOTER_LINKS;
