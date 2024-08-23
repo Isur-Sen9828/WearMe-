@@ -1,8 +1,9 @@
 
-
 function Login() {
   return (
-    <div>Login</div>
+    <section><h3>Sign Up</h3>
+    
+    </section>
   )
 }
 
