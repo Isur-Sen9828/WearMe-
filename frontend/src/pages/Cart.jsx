@@ -1,8 +1,8 @@
-
+import CartItems from "../components/CartItems"
 
 function Cart() {
   return (
-    <div>Cart</div>
+    <div><CartItems/></div>
   )
 }
 
