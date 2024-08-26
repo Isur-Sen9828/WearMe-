@@ -4,14 +4,16 @@ import logout from "../assets/logout.svg"
 import user from "../assets/user.svg"
 
 import Navbar from "./Navbar"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { MdClose, MdMenu } from "react-icons/md"
 import {FaOpencart} from "react-icons/fa"
+import { ShopContext } from "../Context/ShopContext"
 
 const Header = () => {
 
   const [menuOpened, setmenuOpened] = useState(false);
   const toggleMenu = () => setmenuOpened(!menuOpened);
+  const {getTotalCartItems} = useContext(ShopContext);
 
 
   return (
@@ -35,7 +37,7 @@ const Header = () => {
               }
               <div className="flex items-center justify-between sm:gap-x-6">
                 <NavLink to={"cart-page"} className={"flex"}><FaOpencart className="p-1 h-8 w-8 ring-slate-900/3 ring-1 rounded-full"/>
-                <span className="relative flexCenter w-5 h-5 rounded-full bg-secondary text-white medium-14 -top-2">0</span>
+                <span className="relative flexCenter w-5 h-5 rounded-full bg-secondary text-white medium-14 -top-2">{getTotalCartItems()}</span>
                 </NavLink>
                 {/* <NavLink to={'logout'} className={"btn_secondary_rounded flexCenter gap-x-2 medium-16"}>
                   <img src={logout} alt="logoutIcon" height={19} width={19}/> Logout
