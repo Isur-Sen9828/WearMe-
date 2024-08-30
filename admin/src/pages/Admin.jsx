@@ -1,7 +1,18 @@
-import React from 'react'
+import { Routes, Route } from "react-router-dom"
+import Sidebar from "../componenets/Sidebar"
+import AddProduct from "../componenets/AddProduct"
+import ListProduct from "../componenets/ListProduct"
 
-export const Admin = () => {
+const Admin = () => {
   return (
-    <div>Admin</div>
+    <div className="lg:flex">
+        <Sidebar/>
+        <Routes>
+          <Route path="/addproduct" element={<AddProduct/>}/>
+          <Route path="/listproduct" element={<ListProduct/>}/>
+        </Routes>
+    </div>
   )
 }
+
+export default Admin;
