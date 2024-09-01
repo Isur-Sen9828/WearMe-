@@ -6,6 +6,8 @@ const path = require("path");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const multer = require("multer");
+const { type } = require("os");
+const { error } = require("console");
 
 const port = 4000;
 
@@ -129,6 +131,75 @@ app.get('/allproducts', async(req,res) => {
     console.log("all Product fetched");
     res.send(products);
 })
+
+const User = mongoose.model("user",{
+    username:{
+        type:String,
+        required:true,
+    },
+    email:{
+        type:String,
+        required:true,
+    },
+    password:{
+        type:String, 
+        required:true,
+    },
+    cartData:{
+        type:Object, 
+    },
+    date:{
+        type:Date,
+        default:Date.now, 
+    },
+})
+
+//User Registration part
+app.post('/signup', async(req,res) => {
+    let check = await User.findOne({email: req.body.email});
+    if(check){
+        return res.status(400).json({success: false, error: "User Already exists"});
+    }
+    let cart = {};
+    for (let i = 0; i < 300; i++) {
+        cart[i] = 0;   
+    }
+    const user = new User({
+        username: req.body.username,
+        email:req.body.email,
+        password:req.body.password,
+    })
+    await user.save();
+    
+    const data = {
+        user:{
+            id:user.id
+        }
+    }
+    const token = jwt.sign(data, 'secret_ecom');
+    res.json({success:true, token});
+})
+//Endpoint for User Login
+app.post('/login', async(req,res) => {
+    let user = await User.findOne({email: req.body.email});
+    if (user) {
+        const PwMatch = req.body.password === user.password;
+        if (PwMatch) {
+            const data = {
+                user: {
+                    id:user.id
+                }
+            }
+            const token = jwt.sign(data, 'secret_ecom');
+            res.json({success:true, token});
+        }else{
+            res.json({success:false, error:"Wrong Password!"});
+        }  
+    }else{
+        res.json({success:false, error:"Email is Wrong!"})
+    }
+})
+
 
 app.listen(port, (error) =>{
     if (!error) {
