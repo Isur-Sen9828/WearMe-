@@ -1,4 +1,4 @@
-import upload_area from '../assets/upload_area.svg';
+import upload_area from '../assets/upload_area.png';
 import {MdAdd} from 'react-icons/md';
 import { useState } from 'react';
 
@@ -10,7 +10,7 @@ const AddProduct = () => {
         image:"",
         new_price:"",
         old_price:"",
-        category:"Women",
+        category:"women",
     })
     
     const imageHandler = (e) => {
@@ -94,9 +94,9 @@ const AddProduct = () => {
             value={productDetails.category}
             onChange={changeHandler}
             className="bg-primary ring-1 ring-slate-900/20 medium-16 rounded-sm outline-none h-10">
-                <option value="Women">Women</option>
-                <option value="Men">Men</option>
-                <option value="Kid">Kid</option>
+                <option value="women">Women</option>
+                <option value="men">Men</option>
+                <option value="kid">Kid</option>
             </select>
         </div>
         <div>
