@@ -168,6 +168,7 @@ app.post('/signup', async(req,res) => {
         username: req.body.username,
         email:req.body.email,
         password:req.body.password,
+        cartData:cart,
     })
     await user.save();
     
@@ -198,8 +199,58 @@ app.post('/login', async(req,res) => {
     }else{
         res.json({success:false, error:"Email is Wrong!"})
     }
+});
+//endpoint for latestProducts
+app.get('/newcollection', async(req,res) =>{
+    let products = await Product.find({});
+    let newcollection = products.slice(1).slice(-8);
+    console.log('newcollection fetched!');
+    res.send(newcollection);
 })
 
+//endpoint for the popular section
+app.get('/popular', async(req,res) => {
+    let products = await Product.find({category:'men'});
+    let popularproducts = products.slice(0, 4);
+    console.log("popularproducts fetched");
+    res.send(popularproducts);
+});
+
+
+//creating a middleware to fetch user
+const fetchUser = async(req,res,next) => {
+    const token = req.header('auth-token')
+    if (!token) {
+        res.status(401).send({error:'Please authenticate using valid login'})
+    }else
+    try {
+        const data = jwt.verify(token, 'secret_ecom');
+        req.user = data.user;
+        next();
+    } catch (error) {
+        res.status(401).send({errors: 'Please authenticate using a valid token'})
+    }
+}
+//endpoint for addproducts to cart
+app.post('/addtocart', fetchUser, async(req,res) => {
+    console.log("added",req.body.itemId)
+    let userData = await User.findOne({_id:req.user.id});
+    userData.cartData[req.body.itemId] += 1;
+    await User.findOneAndUpdate(
+        {_id:req.user.id}, 
+        {cartData:userData.cartData});
+})
+//create end point for the remove from cart
+app.post('/removefromcart', fetchUser, async(req, res) => {
+    console.log("removed",req.body.itemId)
+    let userData = await User.findOne({_id:req.user.id})
+    if (userData.cartData[req.body.itemId] > 0) {
+        userData.cartData[req.body.itemId] -= 1;
+        await User.findOneAndUpdate(
+            {_id:req.user.id},
+            {cartData:userData.cartData});
+    }
+})
 
 app.listen(port, (error) =>{
     if (!error) {
