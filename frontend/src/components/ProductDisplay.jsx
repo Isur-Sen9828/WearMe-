@@ -21,8 +21,8 @@ const ProductDisplay = (props) => {
                 <img src={product_rt_3} alt="prdctImg" className="max-h-[99px]" />
                 <img src={product_rt_4} alt="prdctImg" className="max-h-[99px]" />
             </div>
-            <div>
-              <img src={product.image} alt="" />
+            <div className="w-72 overflow-hidden">
+              <img src={product.image} alt="" className=" h-full object-cover" />
             </div>
             </div>
             {/* right side */}

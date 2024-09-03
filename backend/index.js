@@ -251,6 +251,12 @@ app.post('/removefromcart', fetchUser, async(req, res) => {
             {cartData:userData.cartData});
     }
 })
+//create endpoint for the get cart data
+app.post('/getcart', fetchUser, async(req,res) => {
+    console.log('getCart');
+    let userData = await User.findOne({_id: req.user.id})
+    res.json(userData.cartData);
+})
 
 app.listen(port, (error) =>{
     if (!error) {
