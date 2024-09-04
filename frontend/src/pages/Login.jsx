@@ -16,7 +16,7 @@ function Login() {
     const Login = async() => {
       console.log("Login trigered",formData);
       let responsiveData;
-      await fetch("http://localhost:4000/login", { 
+      await fetch("localhost:4000/user/login", { 
         method:'POST',
         headers:{
           Accept: 'application/formData',
@@ -33,7 +33,7 @@ function Login() {
     const SignUp = async() => {
       console.log("signup triggered",formData);
       let responsiveData;
-      await fetch("http://localhost:4000/signup", { 
+      await fetch("localhost:4000/user/signup", { 
         method:'POST',
         headers:{
           Accept: 'application/formData',
