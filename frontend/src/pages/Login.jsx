@@ -8,6 +8,7 @@ function Login() {
       email:"",
       password:""
     })
+    
 
     const handleChange = (e) => {
       setformData({...formData,[e.target.name]:e.target.value})
@@ -16,7 +17,7 @@ function Login() {
     const Login = async() => {
       console.log("Login trigered",formData);
       let responsiveData;
-      await fetch("localhost:4000/user/login", { 
+      await fetch("http://localhost:4000/user/login", { 
         method:'POST',
         headers:{
           Accept: 'application/formData',
@@ -33,13 +34,14 @@ function Login() {
     const SignUp = async() => {
       console.log("signup triggered",formData);
       let responsiveData;
-      await fetch("localhost:4000/user/signup", { 
+      await fetch("http://localhost:4000/user/signup", { 
         method:'POST',
         headers:{
           Accept: 'application/formData',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData)
+        
       }).then((response) => response.json()).then((data) => responsiveData=data)
       if (responsiveData.success) {
         localStorage.setItem('auth-token',responsiveData.token);
